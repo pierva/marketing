@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>quickLOG — Pricing & Competitive Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:    #071520;
+    --navy2:   #0d2133;
+    --teal:    #028090;
+    --seafoam: #00A896;
+    --mint:    #02C39A;
+    --dim:     #4a7a8a;
+    --muted:   #8fb3bc;
+    --light:   #d4edf2;
+    --white:   #f5fbfc;
+    --warn:    #f0714a;
+  }
+
+  html { font-size: 15px; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── noise grain overlay ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── decorative blobs ── */
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .blob-1 { width: 480px; height: 480px; background: var(--teal);   top: -120px; right: -80px; }
+  .blob-2 { width: 320px; height: 320px; background: var(--mint);   bottom: 80px; left: -60px; }
+
+  /* ── page wrapper ── */
+  .page {
+    position: relative; z-index: 1;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 36px 60px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 44px;
+    animation: fadeUp .6s ease both;
+  }
+  .brand { display: flex; flex-direction: column; gap: 6px; }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--white);
+    line-height: 1;
+  }
+  .logo span { color: var(--mint); }
+  .tagline {
+    font-size: .85rem;
+    font-weight: 300;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .price-hero {
+    text-align: right;
+    background: linear-gradient(135deg, var(--teal), var(--mint));
+    border-radius: 16px;
+    padding: 18px 28px;
+    min-width: 210px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .price-hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,.08) 0%, transparent 60%);
+  }
+  .price-label {
+    font-size: .72rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.7);
+    font-weight: 500;
+  }
+  .price-main {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+    margin: 2px 0;
+  }
+  .price-sub {
+    font-size: .78rem;
+    color: rgba(255,255,255,.75);
+    font-weight: 300;
+  }
+  .price-setup {
+    margin-top: 8px;
+    font-size: .78rem;
+    color: rgba(255,255,255,.85);
+    font-weight: 500;
+    background: rgba(0,0,0,.15);
+    border-radius: 6px;
+    padding: 4px 8px;
+    display: inline-block;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: .7rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--mint);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+
+  /* ── VALUE PILLS ── */
+  .pills-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 40px;
+    animation: fadeUp .6s .1s ease both;
+  }
+  .pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(2,128,144,.15);
+    border: 1px solid rgba(2,192,154,.2);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: .82rem;
+    color: var(--light);
+    font-weight: 400;
+  }
+  .pill-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--mint);
+    flex-shrink: 0;
+  }
+
+  /* ── TWO COLUMN ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 36px;
+    animation: fadeUp .6s .15s ease both;
+  }
+
+  /* ── OFFER CARD ── */
+  .offer-card {
+    background: var(--navy2);
+    border: 1px solid rgba(2,168,150,.18);
+    border-radius: 18px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .offer-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--mint));
+  }
+
+  .offer-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 18px;
+  }
+
+  .offer-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .offer-icon {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    background: rgba(2,195,154,.15);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .offer-icon svg { width: 12px; height: 12px; fill: var(--mint); }
+  .offer-text { font-size: .86rem; color: var(--light); line-height: 1.5; font-weight: 300; }
+  .offer-text strong { color: var(--white); font-weight: 500; }
+
+  .target-badge {
+    margin-top: 20px;
+    background: rgba(2,128,144,.2);
+    border: 1px solid rgba(2,168,150,.25);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: .82rem;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+  .target-badge strong { color: var(--mint); font-weight: 500; }
+
+  /* ── WHY CHEAPER CARD ── */
+  .why-card {
+    background: var(--navy2);
+    border: 1px solid rgba(240,113,74,.18);
+    border-radius: 18px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .why-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--warn), #f9a14a);
+  }
+
+  .why-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 18px;
+  }
+
+  .why-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+    align-items: flex-start;
+  }
+  .why-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--warn);
+    line-height: 1;
+    min-width: 22px;
+    flex-shrink: 0;
+  }
+  .why-text { font-size: .86rem; color: var(--light); line-height: 1.5; font-weight: 300; }
+  .why-text strong { color: var(--white); font-weight: 500; }
+
+  .savings-row {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .savings-box {
+    background: rgba(240,113,74,.1);
+    border: 1px solid rgba(240,113,74,.2);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+  }
+  .savings-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--warn);
+  }
+  .savings-lbl { font-size: .72rem; color: var(--muted); font-weight: 300; margin-top: 2px; }
+
+  /* ── COMPARISON TABLE ── */
+  .table-wrap {
+    animation: fadeUp .6s .2s ease both;
+    margin-bottom: 36px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--navy2);
+    border: 1px solid rgba(2,168,150,.15);
+    border-radius: 18px;
+    overflow: hidden;
+  }
+
+  thead tr {
+    background: rgba(2,128,144,.15);
+  }
+
+  th {
+    padding: 14px 16px;
+    font-family: 'Syne', sans-serif;
+    font-size: .78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--muted);
+    text-align: left;
+    border-bottom: 1px solid rgba(2,168,150,.15);
+    white-space: nowrap;
+  }
+  th.ql-col {
+    color: var(--mint);
+    background: rgba(2,195,154,.08);
+  }
+
+  td {
+    padding: 11px 16px;
+    font-size: .84rem;
+    color: var(--light);
+    font-weight: 300;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+
+  td.feature-col {
+    color: var(--muted);
+    font-size: .8rem;
+    font-weight: 400;
+  }
+
+  td.ql-col {
+    background: rgba(2,195,154,.06);
+    color: var(--white);
+    font-weight: 500;
+    border-left: 1px solid rgba(2,195,154,.15);
+    border-right: 1px solid rgba(2,195,154,.15);
+  }
+  th.ql-col { border-left: 1px solid rgba(2,195,154,.2); border-right: 1px solid rgba(2,195,154,.2); }
+  thead th.ql-col { border-top: 2px solid var(--mint); }
+
+  .check { color: var(--mint); font-size: 1rem; }
+  .cross { color: var(--dim); font-size: .9rem; }
+  .partial { color: #f0c14a; font-size: .85rem; }
+
+  .price-cell {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: .95rem;
+  }
+  .price-cell.ours { color: var(--mint); }
+  .price-cell.theirs { color: var(--muted); }
+  .price-cell.enterprise { color: var(--dim); font-size: .8rem; }
+
+  tr:hover td { background: rgba(255,255,255,.02); }
+  tr:hover td.ql-col { background: rgba(2,195,154,.1); }
+
+  /* ── BOTTOM ROW ── */
+  .bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    animation: fadeUp .6s .25s ease both;
+  }
+
+  .stat-card {
+    background: var(--navy2);
+    border: 1px solid rgba(2,168,150,.15);
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--mint);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-lbl { font-size: .78rem; color: var(--muted); font-weight: 300; line-height: 1.4; }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    animation: fadeUp .6s .3s ease both;
+  }
+  .footer-brand {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--mint);
+    letter-spacing: -0.5px;
+  }
+  .footer-note {
+    font-size: .75rem;
+    color: var(--dim);
+    font-weight: 300;
+    font-style: italic;
+  }
+  .footer-tag {
+    font-size: .75rem;
+    color: var(--dim);
+    font-weight: 300;
+    text-align: right;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── PRINT STYLES ── */
+  @media print {
+    body { background: #fff; color: #000; }
+    .blob, body::before { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="logo">quick<span>LOG</span></div>
+      <div class="tagline">Production Management &amp; Food Safety Platform</div>
+    </div>
+    <div class="price-hero">
+      <div class="price-label">Monthly Subscription</div>
+      <div class="price-main">$125</div>
+      <div class="price-sub">per month &nbsp;·&nbsp; unlimited users</div>
+      <div class="price-setup">+ $500 one-time setup &amp; 2hr training</div>
+    </div>
+  </header>
+
+  <!-- VALUE PILLS -->
+  <div class="pills-row">
+    <div class="pill"><span class="pill-dot"></span>10 Integrated Modules</div>
+    <div class="pill"><span class="pill-dot"></span>Unlimited Users</div>
+    <div class="pill"><span class="pill-dot"></span>HACCP / SQF / FSMA Compliant</div>
+    <div class="pill"><span class="pill-dot"></span>Bi-Directional Traceability</div>
+    <div class="pill"><span class="pill-dot"></span>Web-Based · No Install</div>
+    <div class="pill"><span class="pill-dot"></span>Live CCP Monitoring</div>
+    <div class="pill"><span class="pill-dot"></span>Built-In Price Calculator</div>
+  </div>
+
+  <!-- TWO COLUMN: OFFER + WHY -->
+  <div class="two-col">
+    <!-- Offer card -->
+    <div class="offer-card">
+      <div class="section-label">What's included</div>
+      <div class="offer-title">Everything. No tiers, no surprises.</div>
+
+      <div class="offer-item">
+        <div class="offer-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="offer-text"><strong>Live Production &amp; CCP Monitoring</strong> — guided operator floor interface with real-time temperature alerts</div>
+      </div>
+      <div class="offer-item">
+        <div class="offer-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="offer-text"><strong>QA Sign-Off Workflow</strong> — batch verification queue, yield recording, lot code confirmation</div>
+      </div>
+      <div class="offer-item">
+        <div class="offer-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="offer-text"><strong>Bi-Directional Traceability</strong> — ingredient → product → customer in minutes, not days</div>
+      </div>
+      <div class="offer-item">
+        <div class="offer-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="offer-text"><strong>Inventory, Orders &amp; Shipments</strong> — lot-level tracking from production to customer delivery</div>
+      </div>
+      <div class="offer-item">
+        <div class="offer-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="offer-text"><strong>ATP Environmental Monitoring</strong> — zone-based pass/fail with retest SLAs</div>
+      </div>
+      <div class="offer-item">
+        <div class="offer-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div class="offer-text"><strong>Analytics, Complaints &amp; Price Calculator</strong> — margin modeling built into the same system</div>
+      </div>
+
+      <div class="target-badge">
+        <strong>Built for:</strong> Small-to-mid food manufacturers currently running on paper logs or spreadsheets — bakeries, prepared food, meat &amp; seafood, dairy, SQF/BRC/FSSC 22000 facilities.
+      </div>
+    </div>
+
+    <!-- Why cheaper card -->
+    <div class="why-card">
+      <div class="section-label">Why we can charge less</div>
+      <div class="why-title">SMB-first. No enterprise bloat.</div>
+
+      <div class="why-item">
+        <div class="why-num">01</div>
+        <div class="why-text"><strong>No per-seat pricing.</strong> Competitors charge per user — a 10-person team at $25/user/month is already $250/mo before any features unlock.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">02</div>
+        <div class="why-text"><strong>No consulting layer baked in.</strong> FoodReady bundles expensive food safety consultants into their cost. quickLOG is built to be self-sufficient.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">03</div>
+        <div class="why-text"><strong>No enterprise sales overhead.</strong> Direct-to-manufacturer model — no resellers, no channel fees, no 6-month procurement cycles.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">04</div>
+        <div class="why-text"><strong>Purpose-built, not adapted.</strong> Enterprise tools charge for features SMBs never use. Every module in quickLOG was built for this exact customer.</div>
+      </div>
+
+      <div class="savings-row">
+        <div class="savings-box">
+          <div class="savings-num">$900+</div>
+          <div class="savings-lbl">saved vs. SafetyChain per year</div>
+        </div>
+        <div class="savings-box">
+          <div class="savings-num">$600+</div>
+          <div class="savings-lbl">saved vs. FoodReady per year</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <div class="table-wrap">
+    <div class="section-label">Competitive Landscape</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:22%">Feature</th>
+          <th class="ql-col" style="width:18%">quickLOG</th>
+          <th style="width:15%">FoodDocs</th>
+          <th style="width:15%">FoodReady</th>
+          <th style="width:15%">SafetyChain</th>
+          <th style="width:15%">Safefood 360°</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="feature-col">Monthly Price</td>
+          <td class="ql-col"><span class="price-cell ours">$125/mo</span></td>
+          <td><span class="price-cell theirs">$84–$250</span></td>
+          <td><span class="price-cell enterprise">Quote</span></td>
+          <td><span class="price-cell enterprise">Quote ($$$$)</span></td>
+          <td><span class="price-cell enterprise">Quote</span></td>
+        </tr>
+        <tr>
+          <td class="feature-col">Unlimited Users</td>
+          <td class="ql-col"><span class="check">✓</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td class="feature-col">Live Floor CCP Monitoring</td>
+          <td class="ql-col"><span class="check">✓</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="partial">Partial</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td class="feature-col">QA Sign-Off Workflow</td>
+          <td class="ql-col"><span class="check">✓</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="partial">Partial</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td class="feature-col">Bi-Directional Traceability</td>
+          <td class="ql-col"><span class="check">✓</span></td>
+          <td><span class="partial">Basic</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td class="feature-col">ATP Environmental Monitoring</td>
+          <td class="ql-col"><span class="check">✓</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td class="feature-col">Inventory + Shipments</td>
+          <td class="ql-col"><span class="check">✓</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="partial">Partial</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+        </tr>
+        <tr>
+          <td class="feature-col">Built-In Price Calculator</td>
+          <td class="ql-col"><span class="check">✓ Unique</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+        </tr>
+        <tr>
+          <td class="feature-col">FSMA Traceability Rule</td>
+          <td class="ql-col"><span class="check">✓</span></td>
+          <td><span class="partial">Partial</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td class="feature-col">SMB-Focused Pricing</td>
+          <td class="ql-col"><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="partial">Partial</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+        </tr>
+        <tr>
+          <td class="feature-col">Web-Based · No Install</td>
+          <td class="ql-col"><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td class="feature-col">Setup &amp; Training Included</td>
+          <td class="ql-col"><span class="check">✓ 2hrs</span></td>
+          <td><span class="partial">Self-serve</span></td>
+          <td><span class="check">✓ Consulting</span></td>
+          <td><span class="partial">Paid add-on</span></td>
+          <td><span class="partial">Paid add-on</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- BOTTOM STATS -->
+  <div class="bottom-row">
+    <div class="stat-card">
+      <div class="stat-num">10</div>
+      <div class="stat-lbl">Integrated modules — production to analytics</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">Days→Min</div>
+      <div class="stat-lbl">Recall investigation time with bi-directional traceability</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">$0</div>
+      <div class="stat-lbl">Extra cost per user — always unlimited seats</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">quickLOG</div>
+    <div class="footer-note">✓ = full feature &nbsp; Partial = limited coverage &nbsp; — = not available</div>
+    <div class="footer-tag">$500 setup · $125/mo · Unlimited users<br>Web-based · HACCP · SQF · FSMA</div>
+  </footer>
+
+</div>
+</body>
+</html>
