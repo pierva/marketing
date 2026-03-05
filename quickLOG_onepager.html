@@ -439,6 +439,80 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  /* ── MOBILE RESPONSIVE ── */
+  @media (max-width: 700px) {
+    html { font-size: 14px; }
+
+    .page { padding: 28px 18px 48px; }
+
+    /* Header stacks vertically */
+    header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+    .logo { font-size: 2.2rem; }
+    .tagline { font-size: .75rem; letter-spacing: .1em; }
+    .price-hero {
+      text-align: center;
+      min-width: unset;
+      padding: 16px 20px;
+    }
+
+    /* Pills wrap naturally — already fine, just reduce gap */
+    .pills-row { gap: 8px; margin-bottom: 28px; }
+    .pill { font-size: .78rem; padding: 5px 11px; }
+
+    /* Two-col becomes single col */
+    .two-col {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .offer-card, .why-card { padding: 22px 18px; }
+
+    /* Table — scrollable horizontally */
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 28px; }
+    .table-wrap::before {
+      content: '← Scroll to compare →';
+      display: block;
+      font-size: .7rem;
+      color: var(--dim);
+      text-align: center;
+      margin-bottom: 8px;
+      letter-spacing: .08em;
+    }
+    table { min-width: 560px; border-radius: 14px; }
+    th, td { padding: 10px 12px; font-size: .78rem; }
+    th { font-size: .7rem; }
+
+    /* Bottom stats: 1 col */
+    .bottom-row {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .stat-num { font-size: 1.7rem; }
+
+    /* Footer stacks */
+    footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .footer-tag { text-align: left; }
+
+    /* Savings row stays 2-col but smaller */
+    .savings-row { gap: 6px; }
+    .savings-num { font-size: 1.1rem; }
+  }
+
+  @media (max-width: 400px) {
+    .logo { font-size: 1.9rem; }
+    .price-main { font-size: 2rem; }
+  }
+
   /* ── PRINT STYLES ── */
   @media print {
     body { background: #fff; color: #000; }
